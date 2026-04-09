@@ -19,10 +19,15 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #F7F5EB;
-      --text: #202A2D;
-      --sage: #CBD0B5;
-      --bg-secondary: #F0EDE1;
+      --bg: #FFF8F0;
+      --text: #3D1023;
+      --gold: #C9A84C;
+      --gold-light: #E8D5A3;
+      --maroon: #6B1D2A;
+      --blush: #F5E3D8;
+      --marigold: #D4952A;
+      --deep-red: #8B2235;
+      --bg-secondary: #F7ECDF;
       --serif: 'DM Serif Display', serif;
       --sans: 'Inter', sans-serif;
       --hand: 'Reenie Beanie', cursive;
@@ -45,7 +50,7 @@
       inset: 0;
       pointer-events: none;
       z-index: 9999;
-      opacity: 0.4;
+      opacity: 0.35;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E");
       background-repeat: repeat;
       background-size: 256px 256px;
@@ -60,6 +65,20 @@
       color: var(--text);
     }
 
+    /* ======= DECORATIVE MANDALA CORNERS ======= */
+    .mandala-corner {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      opacity: 0.06;
+      pointer-events: none;
+    }
+    .mandala-corner svg { width: 100%; height: 100%; }
+    .mandala-tl { top: 0; left: 0; }
+    .mandala-tr { top: 0; right: 0; transform: scaleX(-1); }
+    .mandala-bl { bottom: 0; left: 0; transform: scaleY(-1); }
+    .mandala-br { bottom: 0; right: 0; transform: scale(-1); }
+
     /* ======= NAV ======= */
     nav {
       position: fixed;
@@ -73,8 +92,9 @@
       padding: 0 48px;
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      background: rgba(247, 245, 235, 0.8);
+      background: rgba(255, 248, 240, 0.85);
       z-index: 1000;
+      border-bottom: 1px solid rgba(201, 168, 76, 0.15);
     }
     .nav-left {
       display: flex;
@@ -90,7 +110,7 @@
       align-items: center;
       gap: 8px;
     }
-    .nav-logo span { font-size: 14px; opacity: 0.4; }
+    .nav-logo .om { font-size: 16px; color: var(--gold); }
     .nav-links {
       display: flex;
       gap: 32px;
@@ -104,9 +124,9 @@
       color: var(--text);
       text-decoration: none;
       opacity: 0.7;
-      transition: opacity 0.3s;
+      transition: opacity 0.3s, color 0.3s;
     }
-    .nav-links a:hover { opacity: 1; }
+    .nav-links a:hover { opacity: 1; color: var(--maroon); }
     .nav-rsvp-btn {
       font-family: var(--sans);
       font-size: 10px;
@@ -114,7 +134,7 @@
       text-transform: uppercase;
       letter-spacing: 0.2em;
       padding: 12px 28px;
-      background: var(--text);
+      background: var(--maroon);
       color: var(--bg);
       border: none;
       border-radius: 999px;
@@ -123,7 +143,7 @@
       transition: background 0.4s, color 0.4s;
     }
     .nav-rsvp-btn:hover {
-      background: var(--sage);
+      background: var(--gold);
       color: var(--text);
     }
 
@@ -135,14 +155,36 @@
       justify-content: center;
       padding: 120px 48px 80px;
       position: relative;
+      overflow: hidden;
+    }
+    /* Paisley decorative element */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(ellipse at center, rgba(201, 168, 76, 0.08) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero-om {
+      font-size: 32px;
+      color: var(--gold);
+      margin-bottom: 8px;
+      animation: fadeUp 0.8s ease-out both;
     }
     .hero-blessing {
       font-family: var(--serif);
-      font-size: 16px;
+      font-size: 14px;
       font-style: italic;
-      opacity: 0.5;
-      margin-bottom: 24px;
-      animation: fadeUp 0.8s ease-out both;
+      color: var(--gold);
+      opacity: 0.8;
+      margin-bottom: 32px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      animation: fadeUp 0.8s ease-out 0.05s both;
     }
     .hero-heading {
       font-family: var(--serif);
@@ -160,7 +202,8 @@
       display: block;
       font-style: italic;
       font-size: 0.5em;
-      opacity: 0.4;
+      color: var(--gold);
+      opacity: 0.6;
       margin: 8px 0;
       animation: fadeUp 0.8s ease-out 0.2s both;
     }
@@ -198,9 +241,10 @@
     .hero-date-line {
       width: 48px;
       height: 1px;
-      background: var(--text);
-      opacity: 0.3;
+      background: var(--gold);
+      opacity: 0.5;
     }
+    .hero-date .label { color: var(--maroon); }
     .hero-annotation {
       position: absolute;
       right: 80px;
@@ -208,8 +252,8 @@
       transform: translateY(-50%);
       font-family: var(--hand);
       font-size: 48px;
-      color: var(--text);
-      opacity: 0.6;
+      color: var(--maroon);
+      opacity: 0.5;
       text-align: center;
       animation: fadeUp 0.8s ease-out 0.6s both;
     }
@@ -217,6 +261,28 @@
       display: block;
       font-size: 32px;
       margin-top: -8px;
+    }
+
+    /* ======= DIVIDER ======= */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 0 48px;
+      margin-bottom: 80px;
+    }
+    .section-divider .line {
+      flex: 1;
+      max-width: 200px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      opacity: 0.3;
+    }
+    .section-divider .motif {
+      font-size: 20px;
+      color: var(--gold);
+      opacity: 0.5;
     }
 
     /* ======= COUPLE IMAGE BLOCK ======= */
@@ -234,15 +300,16 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      border: 1px solid rgba(201, 168, 76, 0.15);
     }
     .couple-img-container img {
       height: 80%;
       object-fit: contain;
-      filter: grayscale(100%);
+      filter: grayscale(40%) sepia(20%);
       transition: all 2000ms ease-out;
     }
     .couple-img-container:hover img {
-      filter: grayscale(0%);
+      filter: grayscale(0%) sepia(0%);
       transform: scale(1.05);
     }
     .couple-overlay {
@@ -254,10 +321,10 @@
     .couple-overlay hr {
       width: 48px;
       border: none;
-      border-top: 1px solid var(--text);
+      border-top: 1px solid var(--gold);
       margin-bottom: 16px;
     }
-    .couple-overlay .label { margin-bottom: 8px; }
+    .couple-overlay .label { margin-bottom: 8px; color: var(--maroon); }
     .couple-overlay h2 {
       font-family: var(--serif);
       font-style: italic;
@@ -273,9 +340,9 @@
     .invitation {
       text-align: center;
       padding: 0 48px;
-      margin-bottom: 200px;
+      margin-bottom: 80px;
     }
-    .invitation .label { margin-bottom: 24px; display: block; opacity: 0.5; }
+    .invitation .label { margin-bottom: 24px; display: block; opacity: 0.5; color: var(--gold); }
     .invitation h2 {
       font-family: var(--serif);
       font-size: clamp(36px, 6vw, 80px);
@@ -303,6 +370,7 @@
       display: block;
       margin-bottom: 48px;
       opacity: 0.5;
+      color: var(--maroon);
     }
     .countdown {
       display: flex;
@@ -320,6 +388,7 @@
       font-size: clamp(48px, 8vw, 120px);
       font-weight: 400;
       line-height: 1;
+      color: var(--maroon);
     }
     .countdown-label {
       font-size: 10px;
@@ -332,7 +401,8 @@
     .countdown-sep {
       font-family: var(--serif);
       font-size: clamp(36px, 6vw, 80px);
-      opacity: 0.2;
+      color: var(--gold);
+      opacity: 0.25;
       padding: 0 8px;
       line-height: 1;
     }
@@ -357,6 +427,7 @@
     .celebrations-header .hand-note {
       font-family: var(--hand);
       font-size: 36px;
+      color: var(--maroon);
       opacity: 0.5;
     }
 
@@ -371,10 +442,10 @@
     }
     .events-scroll-container::-webkit-scrollbar { display: none; }
 
+    /* Three distinct card colors for three events */
     .event-card {
       flex: 0 0 380px;
       scroll-snap-align: start;
-      background: var(--sage);
       border-radius: 40px;
       padding: 40px;
       display: flex;
@@ -383,15 +454,55 @@
       min-height: 520px;
       transition: background 0.5s, color 0.5s;
       cursor: default;
+      position: relative;
+      overflow: hidden;
     }
-    .event-card:hover {
-      background: var(--text);
-      color: #fff;
+    .event-card::before {
+      content: '';
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      opacity: 0.08;
+      pointer-events: none;
     }
-    .event-card:hover .event-tag { background: rgba(255,255,255,0.15); color: #fff; }
-    .event-card:hover .event-links a { color: #fff; opacity: 0.7; }
+
+    /* Haldi - marigold/yellow */
+    .card-haldi {
+      background: linear-gradient(165deg, #F5E0A0, #EDD48B);
+      color: #5A3D0A;
+    }
+    .card-haldi::before { background: #C9A84C; }
+    .card-haldi .event-tag { background: rgba(90, 61, 10, 0.1); color: #5A3D0A; }
+    .card-haldi:hover { background: linear-gradient(165deg, #5A3D0A, #7A5A1A); color: #F5E0A0; }
+    .card-haldi:hover .event-tag { background: rgba(245, 224, 160, 0.15); color: #F5E0A0; }
+
+    /* Wedding - deep maroon/red */
+    .card-wedding {
+      background: linear-gradient(165deg, var(--maroon), var(--deep-red));
+      color: #F5E3D8;
+    }
+    .card-wedding::before { background: var(--gold); }
+    .card-wedding .event-tag { background: rgba(255, 255, 255, 0.12); color: #F5E3D8; }
+    .card-wedding .event-date-big { opacity: 0.15; color: var(--gold); }
+    .card-wedding:hover { background: linear-gradient(165deg, #3D1023, #4A0E2B); }
+    .card-wedding:hover .event-tag { background: rgba(201, 168, 76, 0.2); color: var(--gold-light); }
+
+    /* Reception - rich wine/gold */
+    .card-reception {
+      background: linear-gradient(165deg, #F5E3D8, #EDDDD1);
+      color: var(--text);
+    }
+    .card-reception::before { background: var(--maroon); }
+    .card-reception .event-tag { background: rgba(61, 16, 35, 0.08); }
+    .card-reception:hover { background: linear-gradient(165deg, var(--text), #2D0816); color: var(--gold-light); }
+    .card-reception:hover .event-tag { background: rgba(201, 168, 76, 0.15); color: var(--gold-light); }
+
+    .event-card:hover .event-links a { color: currentColor; opacity: 0.7; }
     .event-card:hover .event-links a:hover { opacity: 1; }
-    .event-card:hover .event-date-big { opacity: 0.3; }
+    .event-card:hover .event-date-big { opacity: 0.2; }
     .event-card:hover .event-detail { opacity: 0.8; }
 
     .event-card-top {
@@ -404,7 +515,6 @@
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.2em;
-      background: rgba(32, 42, 45, 0.08);
       padding: 8px 16px;
       border-radius: 999px;
       transition: background 0.5s, color 0.5s;
@@ -419,7 +529,7 @@
       font-family: var(--serif);
       font-size: 96px;
       line-height: 1;
-      opacity: 0.15;
+      opacity: 0.12;
       transition: opacity 0.5s;
     }
     .event-name {
@@ -444,7 +554,7 @@
     .event-detail strong { font-weight: 500; }
     .event-links {
       display: flex;
-      gap: 16px;
+      gap: 12px;
       margin-top: 24px;
     }
     .event-links a {
@@ -452,7 +562,7 @@
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.15em;
-      color: var(--text);
+      color: currentColor;
       text-decoration: none;
       opacity: 0.5;
       transition: all 0.3s;
@@ -470,7 +580,7 @@
     .travel-header {
       margin-bottom: 80px;
     }
-    .travel-header .label { display: block; margin-bottom: 16px; opacity: 0.5; }
+    .travel-header .label { display: block; margin-bottom: 16px; opacity: 0.5; color: var(--gold); }
     .travel-header h2 {
       font-family: var(--serif);
       font-size: clamp(48px, 6vw, 96px);
@@ -486,12 +596,26 @@
       background: var(--bg-secondary);
       border-radius: 40px;
       padding: 48px 40px;
+      border: 1px solid rgba(201, 168, 76, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    .travel-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(to right, var(--gold), var(--marigold), var(--gold));
+      opacity: 0.4;
     }
     .travel-card h3 {
       font-family: var(--serif);
       font-size: 28px;
       font-weight: 400;
       margin-bottom: 24px;
+      color: var(--maroon);
     }
     .travel-card p {
       font-size: 14px;
@@ -499,9 +623,9 @@
       line-height: 1.8;
       opacity: 0.7;
     }
-    .travel-card p strong { font-weight: 500; opacity: 1; }
+    .travel-card p strong { font-weight: 500; opacity: 1; color: var(--maroon); }
     .travel-card a {
-      color: var(--text);
+      color: var(--maroon);
       font-weight: 500;
     }
 
@@ -512,13 +636,14 @@
       margin-bottom: 200px;
     }
     .blessings-card {
-      background: var(--sage);
+      background: linear-gradient(135deg, var(--maroon), var(--deep-red));
       border-radius: 48px;
       padding: 80px 48px;
       position: relative;
       overflow: hidden;
       max-width: 900px;
       margin: 0 auto;
+      color: var(--bg);
     }
     .blessings-card::before {
       content: '';
@@ -528,11 +653,20 @@
       transform: translateX(-50%);
       width: 300px;
       height: 200px;
-      background: rgba(255,255,255,0.4);
+      background: rgba(201, 168, 76, 0.25);
       filter: blur(120px);
       border-radius: 50%;
     }
-    .blessings-card .label { display: block; margin-bottom: 24px; opacity: 0.5; }
+    .blessings-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(201, 168, 76, 0.15);
+      border-radius: 48px;
+      pointer-events: none;
+    }
+    .blessings-card .label { display: block; margin-bottom: 24px; opacity: 0.5; color: var(--gold-light); }
+    .blessings-card .shamrock { font-size: 24px; margin-bottom: 16px; display: block; opacity: 0.5; }
     .blessings-card h2 {
       font-family: var(--serif);
       font-size: clamp(36px, 5vw, 64px);
@@ -541,11 +675,12 @@
       line-height: 1.1;
       margin-bottom: 16px;
       position: relative;
+      color: var(--gold-light);
     }
     .blessings-card p {
       font-size: 18px;
       font-weight: 300;
-      opacity: 0.6;
+      opacity: 0.7;
       max-width: 480px;
       margin: 0 auto;
       line-height: 1.6;
@@ -561,7 +696,7 @@
       max-width: 680px;
       margin: 0 auto;
     }
-    .rsvp .label { display: block; text-align: center; margin-bottom: 16px; opacity: 0.5; }
+    .rsvp .label { display: block; text-align: center; margin-bottom: 16px; opacity: 0.5; color: var(--gold); }
     .rsvp h2 {
       font-family: var(--serif);
       font-size: clamp(48px, 6vw, 80px);
@@ -598,14 +733,14 @@
       font-weight: 300;
       color: var(--text);
       background: var(--bg-secondary);
-      border: 1px solid rgba(32, 42, 45, 0.1);
+      border: 1px solid rgba(201, 168, 76, 0.2);
       border-radius: 24px;
       outline: none;
       transition: border-color 0.3s;
     }
     .form-group input:focus,
     .form-group textarea:focus {
-      border-color: var(--sage);
+      border-color: var(--gold);
     }
     .form-group textarea {
       min-height: 120px;
@@ -621,7 +756,7 @@
       align-items: center;
       gap: 8px;
       background: var(--bg-secondary);
-      border: 1px solid rgba(32, 42, 45, 0.1);
+      border: 1px solid rgba(201, 168, 76, 0.2);
       border-radius: 999px;
       padding: 12px 24px;
       cursor: pointer;
@@ -629,9 +764,9 @@
       user-select: none;
     }
     .event-check:has(input:checked) {
-      background: var(--text);
+      background: var(--maroon);
       color: var(--bg);
-      border-color: var(--text);
+      border-color: var(--maroon);
     }
     .event-check input { display: none; }
     .event-check span {
@@ -646,7 +781,7 @@
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.2em;
-      background: var(--text);
+      background: var(--maroon);
       color: var(--bg);
       border: none;
       border-radius: 999px;
@@ -655,7 +790,7 @@
       margin-top: 16px;
     }
     .submit-btn:hover {
-      background: var(--sage);
+      background: var(--gold);
       color: var(--text);
       transform: scale(1.02);
     }
@@ -664,6 +799,17 @@
     footer {
       background: var(--bg-secondary);
       padding: 80px 48px 40px;
+      position: relative;
+    }
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      opacity: 0.3;
     }
     .footer-top {
       display: flex;
@@ -675,6 +821,7 @@
       font-family: var(--serif);
       font-size: 32px;
       margin-bottom: 8px;
+      color: var(--maroon);
     }
     .footer-tagline {
       font-size: 16px;
@@ -695,16 +842,17 @@
       color: var(--text);
       text-decoration: none;
       padding: 12px 24px;
-      border: 1px solid rgba(32, 42, 45, 0.2);
+      border: 1px solid rgba(201, 168, 76, 0.3);
       border-radius: 999px;
       transition: all 0.3s;
     }
     .footer-contact a:hover {
-      background: var(--text);
+      background: var(--maroon);
       color: var(--bg);
+      border-color: var(--maroon);
     }
     .footer-bottom {
-      border-top: 1px solid rgba(32, 42, 45, 0.1);
+      border-top: 1px solid rgba(201, 168, 76, 0.15);
       padding-top: 24px;
       display: flex;
       justify-content: space-between;
@@ -720,6 +868,7 @@
     .footer-love {
       font-family: var(--hand);
       font-size: 28px;
+      color: var(--maroon);
       opacity: 0.5;
     }
 
@@ -752,13 +901,14 @@
       .travel-grid { grid-template-columns: 1fr; }
       footer { padding: 60px 24px 32px; }
       .footer-top { flex-direction: column; gap: 32px; }
+      .section-divider { padding: 0 24px; }
     }
     @media (max-width: 600px) {
       .hero-heading { font-size: clamp(48px, 14vw, 80px); }
       .couple-img-container { height: 50vh; border-radius: 32px; }
       .event-card { flex: 0 0 85vw; }
       .celebrations-header { flex-direction: column; gap: 8px; }
-      .blessings-card { padding: 48px 24px; }
+      .blessings-card { padding: 48px 24px; border-radius: 32px; }
       .rsvp h2 { font-size: 48px; }
       .events-check-group { flex-direction: column; }
       .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
@@ -770,7 +920,7 @@
   <!-- NAV -->
   <nav>
     <div class="nav-left">
-      <a href="#" class="nav-logo">S <span>&</span> S</a>
+      <a href="#" class="nav-logo"><span class="om">&#x0950;</span> S & S</a>
       <ul class="nav-links">
         <li><a href="#celebrations">Celebrations</a></li>
         <li><a href="#travel">Travel</a></li>
@@ -782,6 +932,7 @@
 
   <!-- HERO -->
   <section class="hero">
+    <div class="hero-om">&#x0950;</div>
     <p class="hero-blessing">Shree Ganeshaya Namah</p>
     <h1 class="hero-heading">
       <span class="line1">Saurabh</span>
@@ -789,7 +940,7 @@
       <span class="line2">
         <span class="underline-wrap">Sneha
           <svg viewBox="0 0 300 12" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M2 8C50 9.5 100 -2 298 4" stroke="#CBD0B5" stroke-width="4" stroke-linecap="round" fill="none"/>
+            <path d="M2 8C50 9.5 100 -2 298 4" stroke="#C9A84C" stroke-width="4" stroke-linecap="round" fill="none"/>
           </svg>
         </span>
       </span>
@@ -823,6 +974,13 @@
     <h2>invite you to celebrate<br>their wedding</h2>
     <p>An intimate celebration of love, tradition, and the beginning of forever.</p>
   </section>
+
+  <!-- DIVIDER -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <span class="motif">&#x2766;</span>
+    <div class="line"></div>
+  </div>
 
   <!-- COUNTDOWN -->
   <section class="countdown-section reveal">
@@ -859,10 +1017,10 @@
     <div class="events-scroll-container">
 
       <!-- Haldi -->
-      <div class="event-card">
+      <div class="event-card card-haldi">
         <div>
           <div class="event-card-top">
-            <span class="event-tag">Ceremony</span>
+            <span class="event-tag">Haldi Ceremony</span>
             <span class="event-day">Saturday</span>
           </div>
           <div class="event-date-big">2</div>
@@ -885,7 +1043,7 @@
       </div>
 
       <!-- Wedding -->
-      <div class="event-card">
+      <div class="event-card card-wedding">
         <div>
           <div class="event-card-top">
             <span class="event-tag">Wedding</span>
@@ -911,7 +1069,7 @@
       </div>
 
       <!-- Reception -->
-      <div class="event-card">
+      <div class="event-card card-reception">
         <div>
           <div class="event-card-top">
             <span class="event-tag">Reception</span>
@@ -979,9 +1137,17 @@
     </div>
   </section>
 
+  <!-- DIVIDER -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <span class="motif">&#x2766;</span>
+    <div class="line"></div>
+  </div>
+
   <!-- BLESSINGS ONLY -->
   <section class="blessings reveal">
     <div class="blessings-card">
+      <span class="shamrock">&#x2618;</span>
       <span class="label">A Gentle Note</span>
       <h2>Blessings Only</h2>
       <p>Your presence is the greatest gift. We kindly request no boxed gifts &mdash; just your love and blessings.</p>
