@@ -312,11 +312,14 @@
       filter: grayscale(0%) sepia(0%);
       transform: scale(1.05);
     }
-    .couple-overlay {
+    .couple-overlay--desktop {
       position: absolute;
       bottom: 48px;
       left: 48px;
       z-index: 2;
+    }
+    .couple-overlay--mobile {
+      display: none;
     }
     .couple-overlay hr {
       width: 48px;
@@ -895,7 +898,15 @@
       .hero-annotation { display: none; }
       .couple-block { padding: 0 16px; }
       .couple-img-container { height: 60vh; border-radius: 40px; }
-      .couple-overlay { bottom: 32px; left: 32px; }
+      .couple-overlay--desktop { display: none; }
+      .couple-overlay--mobile {
+        display: block;
+        text-align: center;
+        padding: 32px 16px 0;
+      }
+      .couple-overlay--mobile hr {
+        margin: 0 auto 12px;
+      }
       .celebrations, .travel, .rsvp, .blessings, .invitation, .countdown-section { padding: 0 24px; }
       .event-card { flex: 0 0 320px; min-height: 460px; padding: 32px; }
       .travel-grid { grid-template-columns: 1fr; }
@@ -960,11 +971,16 @@
   <section class="couple-block">
     <div class="couple-img-container">
       <img src="https://wedding.saurabhn.com/couple.png" alt="Saurabh and Sneha">
-      <div class="couple-overlay">
+      <div class="couple-overlay couple-overlay--desktop">
         <hr>
         <p class="label">The Couple</p>
         <h2>Saurabh & Sneha</h2>
       </div>
+    </div>
+    <div class="couple-overlay couple-overlay--mobile">
+      <hr>
+      <p class="label">The Couple</p>
+      <h2>Saurabh & Sneha</h2>
     </div>
   </section>
 
