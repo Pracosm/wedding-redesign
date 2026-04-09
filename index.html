@@ -445,6 +445,26 @@
     }
     .events-scroll-container::-webkit-scrollbar { display: none; }
 
+    /* Scroll dots (mobile only) */
+    .scroll-dots {
+      display: none;
+      justify-content: center;
+      gap: 8px;
+      padding-top: 24px;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--text);
+      opacity: 0.15;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .dot.active {
+      opacity: 0.6;
+      transform: scale(1.3);
+    }
+
     /* Three distinct card colors for three events */
     .event-card {
       flex: 0 0 380px;
@@ -908,7 +928,15 @@
         margin: 0 auto 12px;
       }
       .celebrations, .travel, .rsvp, .blessings, .invitation, .countdown-section { padding: 0 24px; }
+      .celebrations { padding: 0 24px; overflow: visible; }
+      .events-scroll-container {
+        -webkit-mask-image: none;
+        mask-image: none;
+        padding-left: 0;
+        padding-right: 24px;
+      }
       .event-card { flex: 0 0 320px; min-height: 460px; padding: 32px; }
+      .scroll-dots { display: flex; }
       .travel-grid { grid-template-columns: 1fr; }
       footer { padding: 60px 24px 32px; }
       .footer-top { flex-direction: column; gap: 32px; }
@@ -917,7 +945,7 @@
     @media (max-width: 600px) {
       .hero-heading { font-size: clamp(48px, 14vw, 80px); }
       .couple-img-container { height: 50vh; border-radius: 32px; }
-      .event-card { flex: 0 0 85vw; }
+      .event-card { flex: 0 0 80vw; }
       .celebrations-header { flex-direction: column; gap: 8px; }
       .blessings-card { padding: 48px 24px; border-radius: 32px; }
       .rsvp h2 { font-size: 48px; }
@@ -1111,6 +1139,11 @@
       </div>
 
     </div>
+    <div class="scroll-dots">
+      <span class="dot active" data-index="0"></span>
+      <span class="dot" data-index="1"></span>
+      <span class="dot" data-index="2"></span>
+    </div>
   </section>
 
   <!-- TRAVEL & STAY -->
@@ -1263,6 +1296,18 @@
       });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Scroll dots for event cards
+    const scrollContainer = document.querySelector('.events-scroll-container');
+    const dots = document.querySelectorAll('.dot');
+    if (scrollContainer && dots.length) {
+      scrollContainer.addEventListener('scroll', () => {
+        const scrollLeft = scrollContainer.scrollLeft;
+        const cardWidth = scrollContainer.querySelector('.event-card').offsetWidth + 24;
+        const index = Math.round(scrollLeft / cardWidth);
+        dots.forEach((d, i) => d.classList.toggle('active', i === index));
+      });
+    }
 
     // RSVP handler (placeholder)
     function handleRSVP(e) {
